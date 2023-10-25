@@ -35,14 +35,3 @@ class Calculator {
     return result;
   }
 }
-
-// static String format(Decimal number) {
-//   String result = number.toString(); // 연속된 0을 제거
-//   while (result.contains('.') &&
-//       (result.endsWith('0') || result.endsWith('.'))) {
-//     result = result.substring(0, result.length - 1);
-//   } // ','로 숫자를 구분합니다.
-//   final formatter = NumberFormat("#,###.##"); // 이 줄을 추가하세요.
-//   result = formatter.format(double.parse(result)); // 이 줄을 추가하세요.
-//   return result;
-// }
