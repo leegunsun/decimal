@@ -1,6 +1,7 @@
 import 'package:dcm/cal.dart';
 import 'package:dcm/con.dart';
 import 'package:dcm/fmhelper.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +36,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final TextEditingController tc1 = TextEditingController();
   final TextEditingController tc2 = TextEditingController();
 
@@ -66,18 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 10,
               ),
               Text(c.findT2.value),
-              ElevatedButton(
-                  onPressed: () {
-                    tc1.text = nin;
-                    tc2.text = nin;
-                  },
-                  child: Text('nin')),
-              ElevatedButton(
-                  onPressed: () {
-                    tc1.text = attk;
-                    tc2.text = attk;
-                  },
-                  child: Text('attk')),
               Flexible(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -102,6 +90,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+              Center(
+                child: Text(c.result.value),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        tc1.text = nin;
+                        tc2.text = nin;
+                      },
+                      child: Text('nin')),
+                  ElevatedButton(
+                      onPressed: () {
+                        tc1.text = attk;
+                        tc2.text = attk;
+                      },
+                      child: Text('attk')),
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,10 +117,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         c.findT1.value = tc1.text;
                         c.findT2.value = tc2.text;
-                        var resultfinal =
-                           FormatHelper.displayFormat(Calculator.add(c.findT1.value, c.findT2.value));
-                        c.result.value = resultfinal;
-                        print(resultfinal);
+                        Decimal? result = DecimalCalculator.add(
+                            c.findT1.value, c.findT2.value);
+                        if (result != null) {
+                          String resultfinal =
+                              DecimalHelper.displayFormat(result);
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
                         tc1.clear();
                         tc2.clear();
                       },
@@ -121,10 +133,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         c.findT1.value = tc1.text;
                         c.findT2.value = tc2.text;
-                        var resultfinal =
-                        FormatHelper.displayFormat(Calculator.subtract(c.findT1.value, c.findT2.value));
-                        c.result.value = resultfinal;
-                        print(resultfinal);
+                        Decimal? result = DecimalCalculator.subtract(
+                            c.findT1.value, c.findT2.value);
+                        if (result != null) {
+                          String resultfinal =
+                              DecimalHelper.displayFormat(result);
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
                         tc1.clear();
                         tc2.clear();
                       },
@@ -133,10 +149,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         c.findT1.value = tc1.text;
                         c.findT2.value = tc2.text;
-                        var resultfinal =
-                        FormatHelper.displayFormat(Calculator.multiply(c.findT1.value, c.findT2.value));
-                        c.result.value = resultfinal;
-                        print(resultfinal);
+                        Decimal? result = DecimalCalculator.multiply(
+                            c.findT1.value, c.findT2.value);
+                        if (result != null) {
+                          String resultfinal =
+                              DecimalHelper.displayFormat(result);
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
                         tc1.clear();
                         tc2.clear();
                       },
@@ -145,10 +165,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         c.findT1.value = tc1.text;
                         c.findT2.value = tc2.text;
-                        var resultfinal =
-                        FormatHelper.displayFormat(Calculator.divide(c.findT1.value, c.findT2.value));
-                        c.result.value = resultfinal;
-                        print(resultfinal);
+                        Decimal? result = DecimalCalculator.divide(
+                            c.findT1.value, c.findT2.value);
+                        if (result != null) {
+                          String resultfinal =
+                              DecimalHelper.displayFormat(result);
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
                         tc1.clear();
                         tc2.clear();
                       },
@@ -156,15 +180,73 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 10,
                   ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   ElevatedButton(
                       onPressed: () {
+                        c.findT1.value = tc1.text;
+                        c.findT2.value = tc2.text;
+                        double? result = double.parse(c.findT1.value) +
+                            double.parse(c.findT2.value);
+                        if (result != null) {
+                          String resultfinal = result.toString();
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
                         tc1.clear();
                         tc2.clear();
                       },
-                      child: Text('del')),
+                      child: Text('not +')),
+                  ElevatedButton(
+                      onPressed: () {
+                        c.findT1.value = tc1.text;
+                        c.findT2.value = tc2.text;
+                        double? result = double.parse(c.findT1.value) -
+                            double.parse(c.findT2.value);
+                        if (result != null) {
+                          String resultfinal = result.toString();
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
+                        tc1.clear();
+                        tc2.clear();
+                      },
+                      child: Text('not -')),
+                  ElevatedButton(
+                      onPressed: () {
+                        c.findT1.value = tc1.text;
+                        c.findT2.value = tc2.text;
+                        double? result = double.parse(c.findT1.value) *
+                            double.parse(c.findT2.value);
+                        if (result != null) {
+                          String resultfinal = result.toString();
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
+                        tc1.clear();
+                        tc2.clear();
+                      },
+                      child: Text('not *')),
+                  ElevatedButton(
+                      onPressed: () {
+                        c.findT1.value = tc1.text;
+                        c.findT2.value = tc2.text;
+                        double? result = double.parse(c.findT1.value) /
+                            double.parse(c.findT2.value);
+                        if (result != null) {
+                          String resultfinal = result.toString();
+                          c.result.value = resultfinal;
+                          print(resultfinal);
+                        }
+                        tc1.clear();
+                        tc2.clear();
+                      },
+                      child: Text('not /')),
                 ],
               ),
-              Text(c.result.value)
             ],
           ),
         ),

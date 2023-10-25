@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
 
-class FormatHelper {
+class DecimalHelper {
 
   // String 타입의 숫자를 Decimal 타입으로 변환하는 메서드
   static Decimal decimalEncode(String number) {

@@ -1,37 +1,70 @@
 import 'package:dcm/fmhelper.dart';
 import 'package:decimal/decimal.dart';
 
-class Calculator {
+class DecimalCalculator {
+  static Decimal? add(String aStr, String bStr) {
+    try {
+      Decimal a = DecimalHelper.decimalEncode(aStr);
+      Decimal b = DecimalHelper.decimalEncode(bStr);
 
-  static Decimal add(String aStr, String bStr) {
-    Decimal a = FormatHelper.decimalEncode(aStr);
-    Decimal b = FormatHelper.decimalEncode(bStr);
-    // return FormatHelper.format(a + b); // for rawData...
-    return a + b;
-  }
+      Decimal result = a + b;
 
-  static Decimal subtract(String aStr, String bStr) {
-    Decimal a = FormatHelper.decimalEncode(aStr);
-    Decimal b = FormatHelper.decimalEncode(bStr);
-    // return FormatHelper.format(a - b) // for rawData...;
-    return a - b;
-  }
-
-  static Decimal multiply(String aStr, String bStr) {
-    Decimal a = FormatHelper.decimalEncode(aStr);
-    Decimal b = FormatHelper.decimalEncode(bStr);
-    // return FormatHelper.format(a * b) // for rawData...;
-    return a * b;
-  }
-
-  static Decimal divide(String aStr, String bStr) {
-    Decimal a = FormatHelper.decimalEncode(aStr);
-    Decimal b = FormatHelper.decimalEncode(bStr);
-    if (b == Decimal.fromInt(0)) {
-      throw Exception('Division by zero is not allowed.');
+      if (result < Decimal.zero) {
+        throw Exception('Negative result not allowed.');
+      }
+      return result;
+    } catch (_) {
+      return null;
     }
-    Decimal result = Decimal.parse((a / b).toString());
-    // return FormatHelper.format(result) // for rawData...;
-    return result;
+  }
+
+  static Decimal? subtract(String aStr, String bStr) {
+    try {
+      Decimal a = DecimalHelper.decimalEncode(aStr);
+      Decimal b = DecimalHelper.decimalEncode(bStr);
+
+      Decimal result = a - b;
+
+      if (result < Decimal.zero) {
+        throw Exception('Negative result not allowed.');
+      }
+      return result;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static Decimal? multiply(String aStr, String bStr) {
+    try {
+      Decimal a = DecimalHelper.decimalEncode(aStr);
+      Decimal b = DecimalHelper.decimalEncode(bStr);
+
+      Decimal result = a * b;
+
+      if (result < Decimal.zero) {
+        throw Exception('Negative result not allowed.');
+      }
+      return result;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static Decimal? divide(String aStr, String bStr) {
+    try {
+      Decimal a = DecimalHelper.decimalEncode(aStr);
+      Decimal b = DecimalHelper.decimalEncode(bStr);
+      if (b == Decimal.fromInt(0)) {
+        throw Exception('Division by zero is not allowed.');
+      }
+      Decimal result = Decimal.parse((a / b).toString());
+
+      if (result < Decimal.zero) {
+        throw Exception('Negative result not allowed.');
+      }
+      return result;
+    } catch (_) {
+      return null;
+    }
   }
 }
