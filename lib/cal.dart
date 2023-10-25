@@ -54,7 +54,7 @@ class DecimalCalculator {
     try {
       Decimal a = DecimalHelper.decimalEncode(aStr);
       Decimal b = DecimalHelper.decimalEncode(bStr);
-      if (b == Decimal.fromInt(0)) {
+      if (a == Decimal.fromInt(0) || b == Decimal.fromInt(0)) {
         throw Exception('Division by zero is not allowed.');
       }
       Decimal result = Decimal.parse((a / b).toString());
