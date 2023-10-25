@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dcm/cal.dart';
 import 'package:dcm/con.dart';
 import 'package:dcm/fmhelper.dart';
@@ -36,14 +38,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  Color getRandomColor() {
+    final Random _random = Random();
+    return Color.fromRGBO(
+      _random.nextInt(256), // Red
+      _random.nextInt(256), // Green
+      _random.nextInt(256), // Blue
+      1, // Alpha (opacity)
+    );
+  }
+
+
   final TextEditingController tc1 = TextEditingController();
   final TextEditingController tc2 = TextEditingController();
 
   final c = Get.find<TestController>();
 
-  final String nin = '0.999999999999999999';
+  final lineNum = 4;
+  final String nin = '999999999999999999.999999999999999999';
   final String attk =
       '999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999';
+
+  Text showText (String name,String text) {
+    return Text('$name => $text', maxLines: lineNum, overflow: TextOverflow.ellipsis);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(c.findT1.value),
+              showText('T1',c.findT1.value),
               SizedBox(
-                height: 10,
+                height: 30,
               ),
-              Text(c.findT2.value),
+              showText('T2',c.findT2.value),
               Flexible(
                 child: Column(
                   children: [
@@ -84,7 +103,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Center(
-                child: Text(c.result.value),
+                  child: showText('raw_result',c.rawResult.value)
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: showText('user_result',c.result.value)
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,6 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (result != null) {
                           String resultfinal =
                               DecimalHelper.displayFormat(result);
+                          String rawresult =
+                          DecimalHelper.decimalDecode(result);
+                          c.rawResult.value = rawresult;
                           c.result.value = resultfinal;
                           print(resultfinal);
                         }
@@ -131,6 +159,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (result != null) {
                           String resultfinal =
                               DecimalHelper.displayFormat(result);
+                          String rawresult =
+                          DecimalHelper.decimalDecode(result);
+                          c.rawResult.value = rawresult;
                           c.result.value = resultfinal;
                           print(resultfinal);
                         }
@@ -147,6 +178,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (result != null) {
                           String resultfinal =
                               DecimalHelper.displayFormat(result);
+                          String rawresult =
+                          DecimalHelper.decimalDecode(result);
+                          c.rawResult.value = rawresult;
                           c.result.value = resultfinal;
                           print(resultfinal);
                         }
@@ -163,6 +197,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (result != null) {
                           String resultfinal =
                               DecimalHelper.displayFormat(result);
+                          String rawresult =
+                          DecimalHelper.decimalDecode(result);
+                          c.rawResult.value = rawresult;
                           c.result.value = resultfinal;
                           print(resultfinal);
                         }
