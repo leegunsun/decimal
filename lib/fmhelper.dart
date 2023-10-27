@@ -18,6 +18,9 @@ class DecimalHelper {
       decimalPart = decimalPart.substring(0, decimalPart.length - 1);
     }
 
+    if (decimalPart.isEmpty) {
+      return newParts[0];
+    }
     return '${newParts[0]}.$decimalPart';
   }
 
