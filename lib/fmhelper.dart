@@ -9,7 +9,16 @@ class DecimalHelper {
 
   // Decimal 타입의 숫자를 String 타입으로 변환하는 메서드
   static String decimalDecode(Decimal number) {
-    return number.toStringAsFixed(18);
+
+    String str = number.toStringAsFixed(18);
+
+    List<String> newParts = str.split('.');
+    String decimalPart = newParts[1];
+    while (decimalPart.endsWith('0')) {
+      decimalPart = decimalPart.substring(0, decimalPart.length - 1);
+    }
+
+    return '${newParts[0]}.$decimalPart';
   }
 
   // 유저의 화면에 표현할 displayFormat ex) 1,000.000000000000000001
