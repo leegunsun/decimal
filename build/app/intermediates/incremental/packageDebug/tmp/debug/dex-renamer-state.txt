@@ -1,4 +1,4 @@
-#Sun Oct 29 12:18:26 KST 2023
+#Mon Oct 30 18:25:31 KST 2023
 base.0=C\:\\Users\\zkvpt\\StudioProjects\\decimal\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

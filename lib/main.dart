@@ -5,7 +5,10 @@ import 'package:dcm/addcon.dart';
 import 'package:dcm/fmhelper.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import 'customInput.dart';
 
 void main() {
   Get.put(TestController());
@@ -82,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               showText('T1',c.findT1.value),
+              showText('T1 count', '${c.findT1.value.length}'),
               SizedBox(
                 height: 30,
               ),
@@ -91,6 +95,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Flexible(
                         child: TextField(
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[
+                            CustomNumberInputFormatter(),
+                          ],
+                          onChanged: (value){
+                            c.findT1.value = value;
+                          },
                       controller: tc1,
                     )),
                     SizedBox(
