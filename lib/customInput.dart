@@ -1,33 +1,46 @@
 import 'package:flutter/services.dart';
 
 class CustomNumberInputFormatter extends TextInputFormatter {
+  final RegExp _allowedPattern = RegExp(r'^[0-9,]*(\.[0-9,]*)?$');
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    // 숫자와 소수점만 허용
-    final newText = newValue.text.replaceAll(RegExp(r'[^0-9.]'), '');
+    // 전체 문자열이 정규식과 일치하는지 확인합니다.
+    if (!_allowedPattern.hasMatch(newValue.text)) {
+      return oldValue;
+    }
 
-    // 소수점 위치 찾기
+    final newText = newValue.text;
     final dotIndex = newText.indexOf('.');
 
-    // 소수점이 없는 경우
     if (dotIndex == -1) {
-      if (newText.length > 23) return oldValue;
+      if (newText.length > 17) return oldValue;
       return TextEditingValue(
-        text: newText,
+        text: _formatNumber(newText),
         selection: newValue.selection,
       );
     }
 
-    // 소수점이 있는 경우
     final integerPart = newText.substring(0, dotIndex);
     final decimalPart = newText.substring(dotIndex + 1);
 
-    if (integerPart.length > 23 || decimalPart.length > 18) return oldValue;
+    if (integerPart.length > 17 || decimalPart.length > 18) return oldValue;
 
     return TextEditingValue(
-      text: '$integerPart.$decimalPart',
+      text: '${_formatNumber(integerPart)}.$decimalPart',
       selection: newValue.selection,
     );
+  }
+
+  String _formatNumber(String number) {
+    if (number.isEmpty) {
+      return '';
+    }
+
+    final numericOnly = number.replaceAll(',', '');
+    final formatter = NumberFormat('#,##0');
+
+    return formatter.format(int.tryParse(numericOnly) ?? 0);
   }
 }
